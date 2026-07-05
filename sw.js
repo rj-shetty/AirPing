@@ -9,7 +9,7 @@
 // is both the simplest and the correct strategy. After the first visit,
 // the app never needs the network again.
 
-const VERSION = 'offline-upi-v1.7.0';
+const VERSION = 'offline-upi-v1.8.0';
 
 const ASSETS = [
   './',
@@ -26,6 +26,7 @@ const ASSETS = [
   './js/haptics.js',
   './js/maker.js',
   './js/legal.js',
+  './js/vendor/jsqr.js',
   './js/screens/home.js',
   './js/screens/pay.js',
   './js/screens/balance.js',

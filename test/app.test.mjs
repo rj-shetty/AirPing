@@ -182,10 +182,10 @@ ok(screen('guide').textContent.includes('Link your bank'), 'setup section render
 ok(screen('guide').querySelectorAll('details.faq').length >= 5, 'faqs rendered');
 ok(screen('guide').textContent.includes('Legal'), 'legal section present');
 
-// ---- scan (no BarcodeDetector under test -> fallback) -----------------------
+// ---- scan (no camera under test -> gallery/manual fallback) -----------------
 console.log('scan:');
 location.hash = '#/scan';
-ok(screen('scan').textContent.includes("Can't scan here"), 'scanner falls back without BarcodeDetector');
+ok(screen('scan').textContent.includes('Type the UPI ID'), 'scanner shows a usable fallback without a camera');
 
 console.log(failures ? `\ne2e: ${failures} FAILURES` : '\ne2e:    all assertions passed');
 process.exit(failures ? 1 : 0);

@@ -130,7 +130,9 @@ accounts, no analytics, no ads.
 - Live UPI-ID validation with a hint about which app an ID belongs to (`@ybl`
   usually means PhonePe), an Indian-style keypad (`1,23,456`), the amount spelled
   out, and the ₹5,000 `*99#` limit enforced before you dial.
-- Scan any UPI QR with the camera or from a saved image, read on the device.
+- Scan any UPI QR with the camera or from a saved image, decoded on the device.
+  It uses the browser's native detector where there is one, and a bundled
+  decoder (jsQR) where there isn't, so scanning works on iOS too.
 - A receive screen with your own QR (generated in-app) and an optional amount.
 - Saved people, because typing a UPI ID into a USSD box twice is once too many.
 - A ledger with the month's total, each entry showing the status you gave it.
@@ -164,7 +166,7 @@ accounts, no analytics, no ads.
 | UI | CSS, no framework |
 | Type | Inter, plus a mono for `*99#` codes, self-hosted |
 | QR | Custom encoder, no library |
-| Scanning | `BarcodeDetector`, on-device |
+| Scanning | `BarcodeDetector`, with a bundled jsQR fallback |
 | Storage | `localStorage` |
 | Offline | Service worker, precache everything |
 | Hosting | Vercel, static with security headers |
@@ -236,6 +238,17 @@ failures) so it stays meaningful. The app icon is a QR grid joined with a SIM,
 the two halves of what the product is.
 
 ---
+
+## Compatibility
+
+- **Android (Chrome):** the full flow. The dialer opens with `*99*1*3#` already
+  entered, and the camera scans QR codes.
+- **iPhone / iPad (Safari):** prepare payments, scan QR codes (a bundled decoder
+  covers the missing native one), keep your ledger, and install to the home
+  screen. iOS blocks `*` and `#` in dialer links, so it shows you the code to
+  dial by hand rather than opening the dialer for you.
+- A payment needs a voice SIM on Airtel, Vi, or BSNL. `*99#` is not available on
+  Jio.
 
 ## Try it
 
