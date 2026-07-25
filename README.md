@@ -19,11 +19,9 @@ data pack, in a dead zone, or on any phone with a voice signal.
 
 <br/>
 
-<a href="https://github.com/AayushXL5/offline-upi/blob/main/docs/offline-upi-demo.mp4">
-  <img src="docs/demo-thumbnail.png" alt="Offline UPI walkthrough" width="760" />
+<a href="https://offlineupi.vercel.app">
+  <img src="docs/demo-thumbnail.png" alt="Offline UPI" width="760" />
 </a>
-
-<sub>Full walkthrough, 1:41, with sound. Click to play.</sub>
 
 </div>
 
