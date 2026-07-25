@@ -246,10 +246,11 @@ svg { display: block; }
   color: var(--red);
   text-decoration: none;
   opacity: 0;
-  pointer-events: none;
-  /* the text is tiny; pad the tap target out to ~38px without moving anything */
-  padding: 12px 10px;
-  margin: -12px -10px;
+  /* stays tappable through both phases, so it sits over the status text */
+  z-index: 1;
+  /* the text is tiny; pad the tap target out without shifting the layout */
+  padding: 15px 18px;
+  margin: -15px -18px;
 }
 .wordmark-sub--repo svg {
   width: 10px;
@@ -261,8 +262,10 @@ svg { display: block; }
   stroke-linecap: round;
   stroke-linejoin: round;
 }
+/* no connection means GitHub is unreachable, so stop offering the link */
+.wordmark-subline.net-down .wordmark-sub--repo { pointer-events: none; }
 .wordmark-subline.show-repo #net-status { opacity: 0; }
-.wordmark-subline.show-repo .wordmark-sub--repo { opacity: 1; pointer-events: auto; }
+.wordmark-subline.show-repo .wordmark-sub--repo { opacity: 1; }
 
 .iconbtn--top { width: 42px; height: 42px; }
 

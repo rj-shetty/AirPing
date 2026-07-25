@@ -9,7 +9,7 @@
 // is both the simplest and the correct strategy. After the first visit,
 // the app never needs the network again.
 
-const VERSION = 'offline-upi-v1.9.1';
+const VERSION = 'offline-upi-v1.9.2';
 
 const ASSETS = [
   './',

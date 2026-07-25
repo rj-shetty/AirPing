@@ -89,9 +89,6 @@ let subSwapTimer = null;
 
 function showRepoPlug(show) {
   qs('.wordmark-subline').classList.toggle('show-repo', show);
-  const plug = qs('#repo-plug');
-  plug.tabIndex = show ? 0 : -1;
-  plug.setAttribute('aria-hidden', String(!show));
 }
 
 function swapSubLine() {
@@ -102,6 +99,7 @@ function swapSubLine() {
 
 function updateNetStatus() {
   const sub = qs('#net-status');
+  qs('.wordmark-subline').classList.toggle('net-down', !navigator.onLine);
   if (navigator.onLine) {
     sub.textContent = 'Works without internet';
     sub.classList.remove('is-offline');
