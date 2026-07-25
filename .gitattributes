@@ -4,4 +4,5 @@
 *.jpg binary
 *.jpeg binary
 *.woff2 binary
+*.mp4 binary
 *.svg text eol=lf

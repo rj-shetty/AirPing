@@ -19,7 +19,11 @@ data pack, in a dead zone, or on any phone with a voice signal.
 
 <br/>
 
-<img src="docs/home.png" alt="Home screen" width="270" />
+<a href="https://github.com/AayushXL5/offline-upi/blob/main/docs/offline-upi-demo.mp4">
+  <img src="docs/demo-thumbnail.png" alt="Offline UPI walkthrough" width="760" />
+</a>
+
+<sub>Full walkthrough, 1:41, with sound. Click to play.</sub>
 
 </div>
 
