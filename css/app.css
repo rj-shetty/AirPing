@@ -239,6 +239,28 @@ svg { display: block; }
 }
 .wordmark-sub.is-offline { color: var(--red); }
 
+/* while online the sub line trades places with a link to the repo */
+.wordmark-subline { display: grid; }
+.wordmark-subline > .wordmark-sub { grid-area: 1 / 1; transition: opacity 0.45s ease; }
+.wordmark-sub--repo {
+  color: var(--red);
+  text-decoration: none;
+  opacity: 0;
+  pointer-events: none;
+}
+.wordmark-sub--repo svg {
+  width: 10px;
+  height: 10px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.wordmark-subline.show-repo #net-status { opacity: 0; }
+.wordmark-subline.show-repo .wordmark-sub--repo { opacity: 1; pointer-events: auto; }
+
 .iconbtn--top { width: 42px; height: 42px; }
 
 .screens {

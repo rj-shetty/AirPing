@@ -80,15 +80,38 @@ function wireThemeToggle() {
 }
 
 // ---- connectivity status line ----------------------------------------------------
+// While online, the line under the wordmark alternates between the tagline and
+// a link to the repo. Going offline stops the swap and pins the offline notice.
+
+const TAGLINE_MS = 3000;
+const REPO_MS = 3500;
+let subSwapTimer = null;
+
+function showRepoPlug(show) {
+  qs('.wordmark-subline').classList.toggle('show-repo', show);
+  const plug = qs('#repo-plug');
+  plug.tabIndex = show ? 0 : -1;
+  plug.setAttribute('aria-hidden', String(!show));
+}
+
+function swapSubLine() {
+  const show = !qs('.wordmark-subline').classList.contains('show-repo');
+  showRepoPlug(show);
+  subSwapTimer = setTimeout(swapSubLine, show ? REPO_MS : TAGLINE_MS);
+}
 
 function updateNetStatus() {
   const sub = qs('#net-status');
   if (navigator.onLine) {
     sub.textContent = 'Works without internet';
     sub.classList.remove('is-offline');
+    if (subSwapTimer === null) subSwapTimer = setTimeout(swapSubLine, TAGLINE_MS);
   } else {
     sub.textContent = 'Offline right now. All good';
     sub.classList.add('is-offline');
+    clearTimeout(subSwapTimer);
+    subSwapTimer = null;
+    showRepoPlug(false);
   }
 }
 
