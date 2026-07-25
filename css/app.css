@@ -247,6 +247,9 @@ svg { display: block; }
   text-decoration: none;
   opacity: 0;
   pointer-events: none;
+  /* the text is tiny; pad the tap target out to ~38px without moving anything */
+  padding: 12px 10px;
+  margin: -12px -10px;
 }
 .wordmark-sub--repo svg {
   width: 10px;

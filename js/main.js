@@ -84,7 +84,7 @@ function wireThemeToggle() {
 // a link to the repo. Going offline stops the swap and pins the offline notice.
 
 const TAGLINE_MS = 3000;
-const REPO_MS = 3500;
+const REPO_MS = 6000;
 let subSwapTimer = null;
 
 function showRepoPlug(show) {
