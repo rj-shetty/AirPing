@@ -199,12 +199,12 @@ npm test
 
 Three suites run:
 
-- `test/logic.test.mjs` — the pure logic: UPI-ID validation, amount parsing and
+- `test/logic.test.mjs` covers the pure logic: UPI-ID validation, amount parsing and
   Indian grouping, amount-in-words, `upi://` parse and build, USSD links.
-- `test/qr-roundtrip.test.mjs` — generates QR codes across every version
+- `test/qr-roundtrip.test.mjs` generates QR codes across every version
   boundary and a fuzz sweep, then decodes them back with `jsQR` to prove the
   encoder is correct.
-- `test/app.test.mjs` — boots the whole app in a headless DOM and walks
+- `test/app.test.mjs` boots the whole app in a headless DOM and walks
   onboarding, the pay flow, the ledger, people, receive, guide, and scan.
 
 ## Project structure
