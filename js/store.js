@@ -1,5 +1,5 @@
 /*!
- * Offline UPI
+ * AirPing
  * Copyright (c) 2026 Aayush Gupta. All rights reserved.
  * Source-available for viewing and evaluation only. See LICENSE.
  */
@@ -11,7 +11,7 @@ const KEY = 'offline-upi:v1';
 const HISTORY_CAP = 200;
 
 const defaults = () => ({
-  settings: { theme: 'light', haptics: true, onboarded: false },
+  settings: { theme: 'dark', haptics: true, onboarded: false },
   profile: { name: '', vpa: '' },
   payees: [],
   history: [],

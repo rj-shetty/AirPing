@@ -1,5 +1,5 @@
 /*!
- * Offline UPI
+ * AirPing
  * Copyright (c) 2026 Aayush Gupta. All rights reserved.
  * Source-available for viewing and evaluation only. See LICENSE.
  */
@@ -147,5 +147,11 @@ export function initPeople(root, { nav }) {
     if (root.classList.contains('is-active')) render();
   });
 
-  return { onShow: () => { query = ''; render(); } };
+  return {
+    onShow(params) {
+      query = '';
+      render();
+      if (params?.add) openEditor();
+    },
+  };
 }

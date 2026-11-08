@@ -3,7 +3,7 @@
  * Copyright (c) 2017 Cosmo Wolfe. Licensed under the Apache License 2.0.
  *
  * This file is third-party and is NOT covered by the repository's proprietary
- * LICENSE; it keeps its own Apache-2.0 license (see THIRD-PARTY.md). It is used
+ * LICENSE; it keeps its own Apache-2.0 license It is used
  * only as a QR-decoder fallback for browsers without the native BarcodeDetector
  * API (for example Safari on iOS). Full text: https://www.apache.org/licenses/LICENSE-2.0
  */

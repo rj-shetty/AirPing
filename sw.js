@@ -1,5 +1,5 @@
 /*!
- * Offline UPI
+ * AirPing
  * Copyright (c) 2026 Aayush Gupta. All rights reserved.
  * Source-available for viewing and evaluation only. See LICENSE.
  */
@@ -9,7 +9,7 @@
 // is both the simplest and the correct strategy. After the first visit,
 // the app never needs the network again.
 
-const VERSION = 'offline-upi-v1.9.2';
+const VERSION = 'offline-upi-v1.10.10';
 
 const ASSETS = [
   './',
@@ -24,7 +24,6 @@ const ASSETS = [
   './js/ussd.js',
   './js/qr.js',
   './js/haptics.js',
-  './js/maker.js',
   './js/legal.js',
   './js/vendor/jsqr.js',
   './js/screens/home.js',
@@ -41,6 +40,7 @@ const ASSETS = [
   './fonts/inter-900.woff2',
   './fonts/fragment-mono.woff2',
   './icons/favicon.svg',
+  './icons/bird.png',
   './icons/icon-192.png',
   './icons/icon-512.png',
   './icons/maskable-192.png',

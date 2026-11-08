@@ -1,5 +1,5 @@
 /*!
- * Offline UPI
+ * AirPing
  * Copyright (c) 2026 Aayush Gupta. All rights reserved.
  * Source-available for viewing and evaluation only. See LICENSE.
  */
@@ -12,7 +12,6 @@ import { CODES, CARRIERS, dial, canPrefillDialer, copyText } from '../ussd.js';
 import { qs, esc, icon, toast, confirmSheet } from '../ui.js';
 import { haptics } from '../haptics.js';
 import { applyTheme, installPrompt, clearInstallPrompt } from '../main.js';
-import { MAKER, openMakerSheet } from '../maker.js';
 import { legalHtml } from '../legal.js';
 
 export function initGuide(root, { nav }) {
@@ -117,19 +116,7 @@ export function initGuide(root, { nav }) {
 
       <div class="card" style="margin-top:14px" id="g-legal">
         <span class="overline">Legal</span>
-        <div class="legal-text" style="margin-top:12px">${legalHtml({ linkName: true })}</div>
-      </div>
-
-      <div class="card" style="margin-top:14px">
-        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
-          <div>
-            <span class="overline">Behind this app</span>
-            <h2 style="font-family:var(--font-display);font-size:1.2rem;font-weight:800;letter-spacing:-0.02em;margin-top:6px">${esc(MAKER.name)}</h2>
-          </div>
-          <span class="stamp stamp--accent">Open to work</span>
-        </div>
-        <p class="small muted" style="margin-top:8px">${esc(MAKER.tagline)}</p>
-        <button type="button" class="btn btn--ghost btn--block" data-maker style="margin-top:14px">Contact &amp; links</button>
+        <div class="legal-text" style="margin-top:12px">${legalHtml()}</div>
       </div>
 
       <p class="footnote" style="margin-top:22px">
@@ -165,12 +152,6 @@ export function initGuide(root, { nav }) {
       clearInstallPrompt();
       render();
     });
-
-    root.querySelectorAll('[data-maker], [data-maker-inline]').forEach((b) =>
-      b.addEventListener('click', () => {
-        haptics.tap();
-        openMakerSheet();
-      }));
 
     qs('[data-clear-history]', root).addEventListener('click', async () => {
       const yes = await confirmSheet({

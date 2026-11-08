@@ -1,15 +1,13 @@
 /*!
- * Offline UPI
+ * AirPing
  * Copyright (c) 2026 Aayush Gupta. All rights reserved.
  * Source-available for viewing and evaluation only. See LICENSE.
  */
 
 /* ==========================================================================
-   Offline UPI design system
-   Swiss International / neo-brutalist: system-red on black & white, Inter with
-   heavy Black weights, oversized rounded bento cards, tight-tracked display
-   type over wide-tracked uppercase micro-labels. One accent (red), used
-   sparingly: the money action, the scan key, failures, and small signal dots.
+   AirPing design system
+   A pigeon-inspired palette: midnight navy, airy blue surfaces, and a small
+   coral signal for the wordmark and important errors.
    ========================================================================== */
 
 /* ---- fonts ---------------------------------------------------------- */
@@ -47,31 +45,38 @@
 /* ---- tokens ---------------------------------------------------------- */
 
 :root {
-  --red: #ff3b30;
-  --red-press: #e0241a;
-  --red-soft: #ffe9e7;
+  --red: #ed514b;
+  --red-press: #cf3c3a;
+  --red-soft: #fff0ed;
 
-  --ink: #000000;
-  --paper: #ffffff;
+  --brand: #171b43;
+  --brand-press: #252c61;
+  --brand-soft: #e4f3f8;
+  --brand-highlight: #167b98;
+  --brand-highlight-on: #ffffff;
+  --brand-on: #ffffff;
+
+  --ink: #171b35;
+  --paper: #f4fafc;
   --surface: #ffffff;
 
-  --gray-50: #fafafb;
-  --gray-100: #f2f2f7;
-  --gray-150: #ebebef;
-  --gray-200: #e2e2e8;
-  --gray-400: #a3a3ae;
-  --gray-500: #71717a;
-  --gray-600: #52525b;
-  --gray-800: #27272a;
+  --gray-50: #f5f9fc;
+  --gray-100: #eaf2f7;
+  --gray-150: #e1edf3;
+  --gray-200: #d5e3eb;
+  --gray-400: #98a9ba;
+  --gray-500: #687a90;
+  --gray-600: #4b5c73;
+  --gray-800: #25334b;
 
-  --text: #000000;
-  --text-soft: #52525b;
-  --text-faint: #a3a3ae;
-  --line: #ececf0;
-  --line-strong: #dcdce2;
+  --text: #151a32;
+  --text-soft: #526078;
+  --text-faint: #8997aa;
+  --line: #e0eaf0;
+  --line-strong: #d2e0e8;
 
   --card: var(--gray-50);
-  --card-line: #efeff3;
+  --card-line: #e7eff4;
 
   --font-display: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
@@ -84,13 +89,13 @@
 
   --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.04);
   --shadow-float: 0 12px 34px -12px rgba(0, 0, 0, 0.28);
-  --shadow-red: 0 14px 30px -12px rgba(255, 59, 48, 0.5);
+  --shadow-brand: 0 14px 30px -12px rgba(23, 27, 67, 0.3);
 
-  --tabbar-h: calc(66px + env(safe-area-inset-bottom, 0px));
+  --bottom-safe: env(safe-area-inset-bottom, 0px);
   --ease-pop: cubic-bezier(0.2, 0.9, 0.3, 1.2);
   --ease-out: cubic-bezier(0.22, 0.8, 0.32, 1);
 
-  --btn-bg: #000000;
+  --btn-bg: var(--brand);
   --btn-fg: #ffffff;
 }
 
@@ -101,59 +106,72 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
-    --ink: #ffffff;
-    --paper: #000000;
-    --surface: #0e0e11;
+    --brand: #273468;
+    --brand-press: #354783;
+    --brand-soft: #1a2940;
+    --brand-highlight: #7bd5e9;
+    --brand-highlight-on: #102036;
+    --brand-on: #ffffff;
 
-    --gray-50: #101013;
-    --gray-100: #16161a;
-    --gray-150: #1c1c22;
-    --gray-200: #24242b;
-    --gray-400: #6a6a76;
-    --gray-500: #8b8b96;
-    --gray-600: #a1a1ac;
-    --gray-800: #d4d4dc;
+    --ink: #f5f8ff;
+    --paper: #0b1222;
+    --surface: #111c30;
 
-    --text: #ffffff;
-    --text-soft: #a1a1ac;
-    --text-faint: #6a6a76;
-    --line: #1e1e24;
-    --line-strong: #2c2c34;
+    --gray-50: #142036;
+    --gray-100: #1b2940;
+    --gray-150: #223149;
+    --gray-200: #2b3b54;
+    --gray-400: #75869d;
+    --gray-500: #9aa9bd;
+    --gray-600: #b7c4d4;
+    --gray-800: #dce6f2;
 
-    --card: #101013;
-    --card-line: #1c1c22;
+    --text: #f5f8ff;
+    --text-soft: #b3c0d2;
+    --text-faint: #8292a9;
+    --line: #24344d;
+    --line-strong: #30425d;
 
-    --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.5);
-    --shadow-float: 0 12px 34px -12px rgba(0, 0, 0, 0.8);
+    --card: #16243a;
+    --card-line: #263751;
 
-    --btn-bg: #ffffff;
-    --btn-fg: #000000;
+    --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.28);
+    --shadow-float: 0 12px 34px -12px rgba(0, 0, 0, 0.64);
+
+    --btn-bg: var(--brand-highlight);
+    --btn-fg: #102036;
   }
 }
 
 :root[data-theme='dark'] {
-  --ink: #ffffff;
-  --paper: #000000;
-  --surface: #0e0e11;
-  --gray-50: #101013;
-  --gray-100: #16161a;
-  --gray-150: #1c1c22;
-  --gray-200: #24242b;
-  --gray-400: #6a6a76;
-  --gray-500: #8b8b96;
-  --gray-600: #a1a1ac;
-  --gray-800: #d4d4dc;
-  --text: #ffffff;
-  --text-soft: #a1a1ac;
-  --text-faint: #6a6a76;
-  --line: #1e1e24;
-  --line-strong: #2c2c34;
-  --card: #101013;
-  --card-line: #1c1c22;
-  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.5);
-  --shadow-float: 0 12px 34px -12px rgba(0, 0, 0, 0.8);
-  --btn-bg: #ffffff;
-  --btn-fg: #000000;
+  --brand: #273468;
+  --brand-press: #354783;
+  --brand-soft: #1a2940;
+  --brand-highlight: #7bd5e9;
+  --brand-highlight-on: #102036;
+  --brand-on: #ffffff;
+  --ink: #f5f8ff;
+  --paper: #0b1222;
+  --surface: #111c30;
+  --gray-50: #142036;
+  --gray-100: #1b2940;
+  --gray-150: #223149;
+  --gray-200: #2b3b54;
+  --gray-400: #75869d;
+  --gray-500: #9aa9bd;
+  --gray-600: #b7c4d4;
+  --gray-800: #dce6f2;
+  --text: #f5f8ff;
+  --text-soft: #b3c0d2;
+  --text-faint: #8292a9;
+  --line: #24344d;
+  --line-strong: #30425d;
+  --card: #16243a;
+  --card-line: #263751;
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.28);
+  --shadow-float: 0 12px 34px -12px rgba(0, 0, 0, 0.64);
+  --btn-bg: var(--brand-highlight);
+  --btn-fg: #102036;
 }
 
 /* ---- reset & base ----------------------------------------------------- */
@@ -167,7 +185,9 @@ body {
   font-size: 15.5px;
   line-height: 1.45;
   color: var(--text);
-  background: var(--paper);
+  background: var(--surface);
+  min-height: 100vh;
+  min-height: 100svh;
   min-height: 100dvh;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -181,43 +201,47 @@ input, textarea { font: inherit; color: inherit; }
 svg { display: block; }
 [hidden] { display: none !important; }
 
-:focus-visible { outline: 2.5px solid var(--red); outline-offset: 2px; border-radius: 6px; }
-::selection { background: var(--red); color: #fff; }
+:focus-visible { outline: 2.5px solid var(--brand-highlight); outline-offset: 2px; border-radius: 6px; }
+::selection { background: var(--brand); color: #fff; }
 
 /* ---- app shell -------------------------------------------------------- */
 
 .app {
   position: relative;
-  max-width: 460px;
+  width: min(100%, 520px);
+  max-width: 520px;
   margin: 0 auto;
-  min-height: 100dvh;
-  background: var(--paper);
+  height: 100vh;
+  height: 100svh;
+  height: 100dvh;
+  min-height: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 0;
+  background: var(--surface);
   display: flex;
   flex-direction: column;
-}
-@media (min-width: 500px) {
-  .app { border-inline: 1px solid var(--line); }
 }
 
 .topbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  padding: calc(16px + env(safe-area-inset-top, 0px)) 22px 14px;
-  background: var(--paper);
+  gap: 8px;
+  padding: calc(12px + env(safe-area-inset-top, 0px)) clamp(16px, 4vw, 22px) 10px;
+  background: var(--surface);
   position: sticky;
   top: 0;
   z-index: 20;
 }
 
-.wordmark { display: flex; align-items: center; gap: 11px; }
+.wordmark { display: flex; align-items: center; gap: 9px; min-width: 0; }
 .wordmark-logo { width: 34px; height: 34px; color: var(--ink); flex: none; }
 .wordmark-stack { display: flex; flex-direction: column; gap: 3px; }
 .wordmark-text {
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: 1.15rem;
+  font-size: 1.07rem;
   letter-spacing: -0.04em;
   text-transform: uppercase;
   line-height: 1;
@@ -230,115 +254,58 @@ svg { display: block; }
   align-items: center;
   gap: 6px;
   font-family: var(--font-display);
-  font-size: 0.56rem;
+  font-size: 0.48rem;
   font-weight: 700;
-  letter-spacing: 0.17em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--text-faint);
   white-space: nowrap;
 }
 .wordmark-sub.is-offline { color: var(--red); }
 
-/* while online the sub line trades places with a link to the repo */
-.wordmark-subline { display: grid; }
-.wordmark-subline > .wordmark-sub { grid-area: 1 / 1; transition: opacity 0.45s ease; }
-.wordmark-sub--repo {
-  color: var(--red);
-  text-decoration: none;
-  opacity: 0;
-  /* stays tappable through both phases, so it sits over the status text */
-  z-index: 1;
-  /* the text is tiny; pad the tap target out without shifting the layout */
-  padding: 15px 18px;
-  margin: -15px -18px;
-}
-.wordmark-sub--repo svg {
-  width: 10px;
-  height: 10px;
-  flex: none;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 2.6;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-/* no connection means GitHub is unreachable, so stop offering the link */
-.wordmark-subline.net-down .wordmark-sub--repo { pointer-events: none; }
-.wordmark-subline.show-repo #net-status { opacity: 0; }
-.wordmark-subline.show-repo .wordmark-sub--repo { opacity: 1; }
-
-.iconbtn--top { width: 42px; height: 42px; }
+.top-actions { display: flex; align-items: center; gap: 3px; flex: none; }
+.iconbtn--top { width: 34px; height: 34px; background: transparent; color: var(--text-soft); }
+.iconbtn--top svg { width: 19px; height: 19px; }
+.top-nav-link.is-active { color: var(--brand-highlight); background: var(--brand-soft); }
 
 .screens {
-  flex: 1;
+  flex: 1 1 auto;
+  min-height: 0;
   position: relative;
-  padding-bottom: var(--tabbar-h);
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  scrollbar-width: none;
+  padding-bottom: calc(8px + var(--bottom-safe));
 }
-.screen { display: none; padding: 8px 22px 30px; }
+.screens::-webkit-scrollbar { display: none; }
+.screen { display: none; padding: 8px clamp(16px, 4vw, 22px) 30px; }
 .screen.is-active { display: block; animation: screen-in 0.28s var(--ease-out); }
 .screen:focus { outline: none; }
 .screen--dark { padding: 0; }
+
+/* Keep the home dashboard inside the available screen area. It can still
+   scroll when optional content (such as people or a payment reminder) needs it. */
+.screen[data-screen='home'].is-active {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  padding: 4px clamp(16px, 4vw, 22px) 10px;
+}
+.screen[data-screen='home'] > .home-dashboard {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: clamp(7px, 1.25vh, 12px);
+  min-height: 100%;
+}
+.screen[data-screen='home'] > .home-dashboard > * { flex: none; }
 
 @keyframes screen-in {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: none; }
 }
-
-/* ---- tabbar ------------------------------------------------------------ */
-
-.tabbar {
-  position: fixed;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  max-width: 460px;
-  height: var(--tabbar-h);
-  padding-bottom: env(safe-area-inset-bottom, 0px);
-  background: color-mix(in srgb, var(--paper) 88%, transparent);
-  backdrop-filter: blur(16px) saturate(1.4);
-  -webkit-backdrop-filter: blur(16px) saturate(1.4);
-  border-top: 1px solid var(--line);
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  z-index: 30;
-}
-@media (min-width: 500px) {
-  .tabbar { border-inline: 1px solid var(--line); }
-}
-
-.tab {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  color: var(--text-faint);
-  font-size: 0.6rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  -webkit-tap-highlight-color: transparent;
-}
-.tab svg { width: 23px; height: 23px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
-.tab.is-active { color: var(--ink); }
-.tab.is-active svg { stroke-width: 2.3; }
-
-.tab--scan { position: relative; color: var(--text-faint); }
-.tab-scan-btn {
-  display: grid;
-  place-items: center;
-  width: 56px;
-  height: 56px;
-  margin-top: -30px;
-  border-radius: 50%;
-  background: var(--red);
-  color: #fff;
-  box-shadow: var(--shadow-red);
-  transition: transform 0.12s;
-}
-.tab-scan-btn svg { width: 26px; height: 26px; stroke: currentColor; fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
-.tab--scan:active .tab-scan-btn { transform: scale(0.9); }
 
 /* ---- typography helpers ------------------------------------------------ */
 
@@ -367,7 +334,7 @@ svg { display: block; }
 /* section micro-header above a card group */
 .section-head { display: flex; align-items: center; justify-content: space-between; margin: 4px 4px 12px; }
 .section-head .linklike { font-size: 0.72rem; }
-.linklike { color: var(--red); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.72rem; }
+.linklike { color: var(--brand-highlight); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.72rem; }
 
 /* ---- buttons ------------------------------------------------------------ */
 
@@ -392,8 +359,8 @@ svg { display: block; }
 .btn:not(:disabled):active { transform: scale(0.97); }
 
 .btn--primary { background: var(--btn-bg); color: var(--btn-fg); }
-.btn--gold { background: var(--red); color: #fff; box-shadow: var(--shadow-red); }
-.btn--gold:not(:disabled):active { background: var(--red-press); }
+.btn--gold { background: var(--brand); color: var(--brand-on); box-shadow: var(--shadow-brand); }
+.btn--gold:not(:disabled):active { background: var(--brand-press); }
 .btn--ghost { background: transparent; border: 1.5px solid var(--line-strong); color: var(--text); }
 .btn--ghost:not(:disabled):active { background: var(--gray-100); }
 .btn--danger { background: var(--red-soft); color: var(--red); }
@@ -438,7 +405,7 @@ svg { display: block; }
 .card--ink { background: var(--ink); color: var(--paper); border-color: var(--ink); border-radius: var(--r-xl); }
 .card--ink .overline { color: color-mix(in srgb, var(--paper) 55%, transparent); }
 .card--ink .muted, .card--ink .small.muted { color: color-mix(in srgb, var(--paper) 62%, transparent); }
-.card--ink .walk li::before { background: var(--red); color: #fff; }
+.card--ink .walk li::before { background: var(--brand-highlight); color: var(--brand-highlight-on); }
 .card--ink .walk .small { color: color-mix(in srgb, var(--paper) 62%, transparent); }
 .card--ink .walk li:not(:last-child)::after { background: color-mix(in srgb, var(--paper) 18%, transparent); }
 .card--ink .mono { color: inherit; }
@@ -446,18 +413,18 @@ svg { display: block; }
 .stack > * + * { margin-top: 14px; }
 .stack--loose > * + * { margin-top: 20px; }
 
-/* the money action: the one big red bento card */
+/* the money action: the one prominent navy bento card */
 .action-card {
   position: relative;
   display: block;
   width: 100%;
   text-align: left;
-  background: var(--red);
+  background: linear-gradient(135deg, var(--brand), var(--brand-press));
   color: #fff;
   border-radius: var(--r-xl);
-  padding: 26px 24px;
+  padding: clamp(18px, 3vh, 26px) clamp(20px, 5vw, 24px);
   overflow: hidden;
-  box-shadow: var(--shadow-red);
+  box-shadow: var(--shadow-brand);
   transition: transform 0.14s var(--ease-out);
   -webkit-tap-highlight-color: transparent;
 }
@@ -465,14 +432,14 @@ svg { display: block; }
 .action-card .overline { color: rgba(255, 255, 255, 0.72); }
 .action-card h2 {
   font-family: var(--font-display);
-  font-size: 2.15rem;
+  font-size: clamp(1.6rem, 4.2vh, 2.15rem);
   font-weight: 900;
   letter-spacing: -0.045em;
   line-height: 0.98;
   text-transform: uppercase;
-  margin-top: 10px;
+  margin-top: clamp(6px, 1.2vh, 10px);
 }
-.action-card p { margin-top: 10px; font-size: 0.85rem; font-weight: 500; color: rgba(255, 255, 255, 0.82); max-width: 78%; }
+.action-card p { margin-top: clamp(6px, 1vh, 10px); font-size: 0.85rem; font-weight: 500; color: rgba(255, 255, 255, 0.82); max-width: 78%; }
 .action-card .action-card-arrow {
   position: absolute; right: 22px; top: 24px;
   width: 30px; height: 30px;
@@ -487,25 +454,97 @@ svg { display: block; }
   bottom: -52px;
   width: 168px;
   height: 168px;
-  background: #fff;
-  opacity: 0.12;
+  background: var(--brand-highlight);
+  opacity: 0.2;
   -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M10.6 2.8a1.4 1.4 0 0 1 2.8 0v5.6l4.85-2.8a1.4 1.4 0 1 1 1.4 2.42L14.8 10.8l4.85 2.78a1.4 1.4 0 1 1-1.4 2.43L13.4 13.2v5.6a1.4 1.4 0 0 1-2.8 0v-5.6l-4.85 2.8a1.4 1.4 0 1 1-1.4-2.42L9.2 10.8 4.35 8.02a1.4 1.4 0 0 1 1.4-2.43l4.85 2.8z'/%3E%3C/svg%3E") center / contain no-repeat;
   mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M10.6 2.8a1.4 1.4 0 0 1 2.8 0v5.6l4.85-2.8a1.4 1.4 0 1 1 1.4 2.42L14.8 10.8l4.85 2.78a1.4 1.4 0 1 1-1.4 2.43L13.4 13.2v5.6a1.4 1.4 0 0 1-2.8 0v-5.6l-4.85 2.8a1.4 1.4 0 1 1-1.4-2.42L9.2 10.8 4.35 8.02a1.4 1.4 0 0 1 1.4-2.43l4.85 2.8z'/%3E%3C/svg%3E") center / contain no-repeat;
 }
 
 .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
+.quick-actions { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 9px; }
+.quick-action {
+  min-width: 0;
+  min-height: clamp(72px, 12vh, 88px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border: 1px solid var(--card-line);
+  border-radius: 18px;
+  background: var(--card);
+  color: var(--text);
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.12s, background 0.12s;
+}
+.quick-action:active { transform: scale(0.96); }
+.quick-action svg { width: 21px; height: 21px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; color: var(--text-soft); }
+.quick-action b { font-family: var(--font-display); font-size: 0.8rem; font-weight: 800; letter-spacing: -0.02em; }
+.quick-action--scan svg { color: var(--brand-highlight); stroke-width: 2.4; }
+
+.home-section { min-width: 0; }
+.home-section .section-head { margin: 0 2px 7px; }
+.home-section .section-head .linklike { font-size: 0.66rem; }
+.payment-preview {
+  min-width: 0;
+  padding: 8px 10px;
+  border: 1px solid var(--card-line);
+  border-radius: 17px;
+  background: var(--card);
+}
+.payment-preview-row { display: flex; align-items: center; min-width: 0; gap: 10px; }
+.payment-preview-main { padding: 0; color: inherit; text-align: left; -webkit-tap-highlight-color: transparent; }
+.payment-preview-main:active { opacity: 0.72; }
+.payment-preview .avatar { width: 36px; height: 36px; border-radius: 12px; font-size: 0.78rem; }
+.payment-preview-main { flex: 1; min-width: 0; }
+.payment-preview-main b, .payment-preview-main > span { display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.payment-preview-main b { font-size: 0.8rem; font-weight: 800; text-transform: uppercase; }
+.payment-preview-main > span { color: var(--text-faint); font-size: 0.68rem; }
+.payment-preview-side { display: flex; flex: none; flex-direction: column; align-items: flex-end; gap: 3px; }
+.payment-preview-side > b { font-family: var(--font-display); font-size: 0.84rem; font-weight: 900; white-space: nowrap; }
+.payment-preview-side .stamp { font-size: 0.5rem; padding: 2px 5px; }
+.payment-preview .confirm-nudge { margin-top: 6px; padding: 6px 0 0; border-top: 1px solid var(--line); border-radius: 0; }
+.payment-empty {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--card-line);
+  border-radius: 16px;
+  background: var(--card);
+  color: var(--text-faint);
+  font-size: 0.73rem;
+  text-align: left;
+}
+.payment-empty b { display: inline-flex; align-items: center; gap: 5px; color: var(--brand-highlight); font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.04em; }
+.payment-empty svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2; }
+.setup-banner { padding: 11px 12px; gap: 9px; font-size: 0.73rem; line-height: 1.35; }
+.setup-banner > svg { width: 17px; height: 17px; }
+.setup-banner .banner-actions { margin-top: 6px; gap: 16px; }
+.setup-banner .linklike { font-size: 0.69rem; }
+.setup-banner [data-dismiss-setup] { color: var(--text-faint); }
+.people-section .people-strip { gap: 11px; padding: 1px 2px 0; }
+.people-section .person-chip { width: 50px; gap: 5px; font-size: 0.58rem; }
+.people-section .person-chip .avatar { width: 42px; height: 42px; border-radius: 13px; font-size: 0.8rem; }
+.add-person-mark { width: 42px; height: 42px; display: grid; place-items: center; border: 1px dashed var(--line-strong); border-radius: 13px; color: var(--text-faint); }
+.add-person-mark svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
+.install-row { text-align: center; padding-top: 2px; }
+.install-row .install-cta { padding: 8px 18px; font-size: 0.76rem; }
+
 .mini-card {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 14px;
+  gap: clamp(8px, 1.6vh, 14px);
   text-align: left;
   background: var(--card);
   border: 1px solid var(--card-line);
   border-radius: var(--r-lg);
-  padding: 18px;
-  min-height: 118px;
+  padding: clamp(12px, 2vh, 18px);
+  min-height: clamp(94px, 15vh, 118px);
   justify-content: space-between;
   transition: transform 0.12s;
   -webkit-tap-highlight-color: transparent;
@@ -529,11 +568,57 @@ svg { display: block; }
   padding: 16px 17px;
   font-size: 0.85rem;
 }
-.banner svg { width: 20px; height: 20px; flex: none; margin-top: 1px; color: var(--red); fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.banner svg { width: 20px; height: 20px; flex: none; margin-top: 1px; color: var(--brand-highlight); fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .banner b { font-weight: 800; }
 .banner .linklike { text-transform: none; letter-spacing: 0; font-size: 0.82rem; }
 /* actions on their own row so nothing orphans onto a line by itself */
 .banner-actions { display: flex; gap: 18px; margin-top: 9px; }
+
+@media (max-height: 700px) {
+  .screen[data-screen='home'] { padding-bottom: 7px; }
+  .screen[data-screen='home'] > .home-dashboard { gap: 7px; }
+  .action-card { padding: 14px 18px; }
+  .action-card h2 { font-size: clamp(1.45rem, 4.2vh, 1.75rem); margin-top: 5px; }
+  .action-card p { margin-top: 5px; font-size: 0.78rem; line-height: 1.3; }
+  .quick-action { min-height: 70px; gap: 5px; }
+  .quick-actions { gap: 8px; }
+  .payment-preview { padding-block: 7px; }
+  .setup-banner { padding: 9px 11px; }
+  .people-section .people-strip { padding-bottom: 0; }
+  .mini-card { min-height: 92px; padding: 12px; gap: 8px; }
+  .banner:not(.setup-banner) { padding: 12px 14px; font-size: 0.8rem; line-height: 1.35; }
+  .banner:not(.setup-banner) .banner-actions { margin-top: 6px; }
+  .install-cta { padding-block: 7px; font-size: 0.76rem; }
+}
+
+@media (max-height: 620px) {
+  .topbar { padding-top: calc(9px + env(safe-area-inset-top, 0px)); padding-bottom: 7px; }
+  .wordmark-logo { width: 28px; height: 28px; }
+  .iconbtn--top { width: 31px; height: 31px; }
+  .screen[data-screen='home'] { padding-top: 2px; }
+  .screen[data-screen='home'] > .home-dashboard { gap: 5px; }
+  .action-card { padding: 11px 16px; border-radius: 20px; }
+  .action-card h2 { font-size: 1.4rem; margin-top: 4px; }
+  .action-card p { margin-top: 4px; font-size: 0.72rem; }
+  .action-card .action-card-arrow { width: 25px; height: 25px; right: 17px; top: 17px; }
+  .quick-action { min-height: 62px; gap: 3px; border-radius: 15px; }
+  .quick-action svg { width: 18px; height: 18px; }
+  .quick-action b { font-size: 0.72rem; }
+  .payment-preview .avatar { width: 32px; height: 32px; }
+  .payment-preview { padding: 6px 9px; }
+  .setup-banner { padding-block: 7px; }
+  .people-section .person-chip .avatar, .add-person-mark { width: 36px; height: 36px; border-radius: 11px; }
+  .install-row .install-cta { padding-block: 5px; }
+}
+
+@media (max-width: 360px) {
+  .topbar { padding-inline: 14px; }
+  .screen[data-screen='home'].is-active { padding-inline: 14px; }
+  .wordmark-logo { width: 29px; height: 29px; }
+  .wordmark { gap: 7px; }
+  .wordmark-text { font-size: 0.98rem; }
+  .wordmark-sub { font-size: 0.43rem; letter-spacing: 0.09em; }
+}
 
 /* ---- list rows ---------------------------------------------------------- */
 
@@ -571,7 +656,7 @@ svg { display: block; }
   font-size: 0.9rem;
   letter-spacing: -0.02em;
 }
-/* Swiss palette: mostly black & gray, red used once in six. */
+/* Keep contact colors mostly navy and blue, with coral as a small accent. */
 .avatar--0 { background: var(--ink); color: var(--paper); }
 .avatar--1 { background: var(--gray-100); color: var(--ink); }
 .avatar--2 { background: var(--red); color: #fff; }
@@ -610,7 +695,7 @@ svg { display: block; }
 .stamp--sent { background: var(--ink); color: var(--paper); }
 .stamp--failed { background: var(--red); color: #fff; }
 .stamp--wait { background: var(--gray-100); color: var(--text-soft); }
-.stamp--accent { background: var(--red); color: #fff; }
+.stamp--accent { background: var(--brand); color: var(--brand-on); }
 
 .stamp--big { font-size: 0.72rem; padding: 8px 16px; letter-spacing: 0.16em; }
 .stamp-in { animation: stamp-in 0.4s var(--ease-pop) both; }
@@ -695,7 +780,7 @@ svg { display: block; }
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   transition: transform 0.2s var(--ease-out);
 }
-.switch input:checked + .switch-track { background: var(--red); }
+.switch input:checked + .switch-track { background: var(--brand-highlight); }
 .switch input:checked + .switch-track::after { transform: translateX(20px); }
 
 /* ---- pay flow ------------------------------------------------------------ */
@@ -705,7 +790,7 @@ svg { display: block; }
 
 .dots { display: flex; gap: 5px; }
 .dots i { width: 7px; height: 7px; border-radius: 999px; background: var(--gray-200); transition: all 0.25s; }
-.dots i.is-on { background: var(--red); width: 20px; }
+.dots i.is-on { background: var(--brand-highlight); width: 20px; }
 
 .amount-wrap { text-align: center; padding: 16px 0 6px; }
 .amount-display {
@@ -723,7 +808,7 @@ svg { display: block; }
   display: inline-block;
   width: 4px; height: 0.8em;
   margin-left: 4px;
-  background: var(--red);
+  background: var(--brand-highlight);
   border-radius: 2px;
   vertical-align: -6%;
   animation: blink 1.1s steps(1) infinite;
@@ -917,9 +1002,9 @@ details.faq .faq-body em { font-style: normal; font-weight: 700; color: var(--in
 
 .scanner {
   position: relative;
-  height: calc(100dvh - var(--tabbar-h) - 62px);
-  min-height: 420px;
-  background: #000;
+  height: calc(100dvh - 128px - var(--bottom-safe));
+  min-height: 320px;
+  background: #0b1222;
   color: #fff;
   overflow: hidden;
 }
@@ -931,7 +1016,7 @@ details.faq .faq-body em { font-style: normal; font-weight: 700; color: var(--in
   transform: translate(-50%, -50%);
   width: min(64vw, 260px);
   aspect-ratio: 1;
-  color: var(--red);
+  color: var(--brand-highlight);
 }
 .scan-frame svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
 .scan-frame::after {
@@ -940,8 +1025,8 @@ details.faq .faq-body em { font-style: normal; font-weight: 700; color: var(--in
   left: 8%; right: 8%; top: 0;
   height: 2.5px;
   border-radius: 2px;
-  background: var(--red);
-  box-shadow: 0 0 16px var(--red);
+  background: var(--brand-highlight);
+  box-shadow: 0 0 16px var(--brand-highlight);
   animation: scanline 2.4s ease-in-out infinite;
 }
 @keyframes scanline { 0%, 100% { top: 10%; } 50% { top: 88%; } }
@@ -951,7 +1036,7 @@ details.faq .faq-body em { font-style: normal; font-weight: 700; color: var(--in
 .scan-controls { position: absolute; bottom: 24px; left: 0; right: 0; display: flex; justify-content: center; gap: 14px; padding: 0 22px; }
 .scan-hint { position: absolute; bottom: 96px; left: 0; right: 0; text-align: center; font-size: 0.82rem; color: rgba(255, 255, 255, 0.72); padding: 0 34px; font-weight: 500; }
 .scanner .iconbtn { background: rgba(255, 255, 255, 0.14); color: #fff; width: 54px; height: 54px; }
-.scanner .iconbtn.is-on { background: var(--red); color: #fff; }
+.scanner .iconbtn.is-on { background: var(--brand-highlight); color: var(--brand-highlight-on); }
 .scan-fallback { padding: 44px 26px; text-align: center; color: #fff; }
 
 /* ---- sheets -------------------------------------------------------------------- */
@@ -992,7 +1077,7 @@ details.faq .faq-body em { font-style: normal; font-weight: 700; color: var(--in
 
 /* ---- toast ----------------------------------------------------------------------- */
 
-#toast-root { position: fixed; bottom: calc(var(--tabbar-h) + 14px); left: 0; right: 0; display: flex; flex-direction: column; align-items: center; gap: 8px; z-index: 80; pointer-events: none; }
+#toast-root { position: fixed; bottom: calc(16px + var(--bottom-safe)); left: 0; right: 0; display: flex; flex-direction: column; align-items: center; gap: 8px; z-index: 80; pointer-events: none; }
 .toast {
   display: flex;
   align-items: center;
@@ -1011,7 +1096,7 @@ details.faq .faq-body em { font-style: normal; font-weight: 700; color: var(--in
 }
 .toast.is-leaving { animation: toast-out 0.25s ease-in forwards; }
 .toast svg { width: 16px; height: 16px; flex: none; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
-.toast button { color: var(--red); font-weight: 800; margin-left: 6px; flex: none; text-transform: uppercase; font-size: 0.76rem; letter-spacing: 0.06em; }
+.toast button { color: var(--brand-highlight); font-weight: 800; margin-left: 6px; flex: none; text-transform: uppercase; font-size: 0.76rem; letter-spacing: 0.06em; }
 @keyframes toast-in { from { opacity: 0; transform: translateY(14px) scale(0.92); } }
 @keyframes toast-out { to { opacity: 0; transform: translateY(8px) scale(0.95); } }
 
@@ -1026,19 +1111,20 @@ details.faq .faq-body em { font-style: normal; font-weight: 700; color: var(--in
 
 /* ---- home extras -------------------------------------------------------------------- */
 
-.confirm-nudge { display: flex; align-items: center; gap: 13px; }
-.confirm-nudge .row-main { padding-right: 6px; }
-.confirm-nudge .row-main b { font-size: 0.92rem; font-weight: 800; letter-spacing: -0.02em; white-space: normal; }
-.confirm-nudge .row-main .small { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.confirm-nudge .nudge-actions { display: flex; gap: 8px; }
+.confirm-nudge { display: flex; align-items: center; gap: 9px; padding: 8px 10px; border-radius: 16px; }
+.confirm-copy { flex: 1; min-width: 0; }
+.confirm-copy b, .confirm-copy .small { display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.confirm-copy b { font-size: 0.74rem; font-weight: 800; letter-spacing: -0.02em; }
+.confirm-copy .small { font-size: 0.65rem; }
+.confirm-nudge .nudge-actions { display: flex; gap: 5px; }
 .nudge-btn {
-  width: 44px; height: 44px;
-  border-radius: 14px;
+  width: 32px; height: 32px;
+  border-radius: 10px;
   display: grid; place-items: center;
   -webkit-tap-highlight-color: transparent;
   transition: transform 0.1s;
 }
-.nudge-btn svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+.nudge-btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
 .nudge-btn--yes { color: var(--paper); background: var(--ink); }
 .nudge-btn--no { color: var(--red); background: var(--red-soft); }
 :root[data-theme='dark'] .nudge-btn--no { background: #2a1512; }
@@ -1049,23 +1135,29 @@ details.faq .faq-body em { font-style: normal; font-weight: 700; color: var(--in
 .carrier-strip b { font-weight: 800; color: var(--text-soft); }
 .carrier-strip .no { text-decoration: line-through; opacity: 0.7; }
 
-/* compact, understated install action under the carrier strip */
+/* A focused install pill: branded navy with a blue accent, not a second hero. */
 .install-cta {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  padding: 9px 18px;
+  min-height: 40px;
+  max-width: 100%;
+  padding: 8px 16px;
   border-radius: 999px;
-  border: 1.5px solid var(--line-strong);
-  color: var(--text-soft);
-  font-size: 0.82rem;
-  font-weight: 700;
+  border: 1px solid color-mix(in srgb, var(--brand-highlight) 42%, transparent);
+  background: var(--brand);
+  color: var(--brand-on);
+  font-size: 0.76rem;
+  font-weight: 800;
   letter-spacing: -0.01em;
+  box-shadow: 0 6px 16px color-mix(in srgb, var(--brand) 22%, transparent);
   -webkit-tap-highlight-color: transparent;
-  transition: transform 0.12s, border-color 0.15s, color 0.15s;
+  transition: transform 0.12s, box-shadow 0.15s, background 0.15s;
 }
-.install-cta svg { width: 16px; height: 16px; flex: none; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
-.install-cta:active { transform: scale(0.96); border-color: var(--ink); color: var(--text); }
+.install-cta svg { width: 16px; height: 16px; flex: none; color: var(--brand-highlight); fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.install-cta:hover { background: var(--brand-press); box-shadow: 0 8px 20px color-mix(in srgb, var(--brand) 30%, transparent); }
+.install-cta:active { transform: scale(0.97); }
 
 /* "Legal" sits inline in the carrier strip, styled to match it */
 .carrier-legal {
@@ -1079,56 +1171,10 @@ details.faq .faq-body em { font-style: normal; font-weight: 700; color: var(--in
 }
 .carrier-legal:active { color: var(--text-soft); }
 
-/* inline name link, underlined in red, offset clear of descenders */
-.name-link {
-  font: inherit;
-  font-weight: 800;
-  color: var(--text);
-  text-decoration: underline;
-  text-decoration-color: var(--red);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 4px;
-  -webkit-tap-highlight-color: transparent;
-}
-.name-link:active { opacity: 0.7; }
-
 /* legal disclaimer: comfortable measure, roomy line-height */
 .legal-text { font-size: 0.85rem; line-height: 1.62; color: var(--text-soft); }
 .legal-text p + p { margin-top: 12px; }
 .legal-text em { font-style: normal; font-weight: 700; color: var(--text); }
-
-/* the maker credit: reads as a link, sits high enough to be seen on landing */
-.maker-credit {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 7px;
-  width: 100%;
-  padding: 4px 2px;
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: var(--text-soft);
-  -webkit-tap-highlight-color: transparent;
-}
-.maker-credit b {
-  font-weight: 800;
-  color: var(--text);
-  text-decoration: underline;
-  text-decoration-color: var(--red);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 3px;
-}
-.maker-credit svg {
-  width: 15px;
-  height: 15px;
-  flex: none;
-  fill: none;
-  stroke: var(--red);
-  stroke-width: 2.4;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-.maker-credit:active { opacity: 0.7; }
 
 /* ---- QR card (receive) ---------------------------------------------------------------- */
 
@@ -1177,15 +1223,15 @@ details.faq .faq-body em { font-style: normal; font-weight: 700; color: var(--in
   width: 96px; height: 96px;
   border-radius: 28px;
   display: grid; place-items: center;
-  background: var(--red);
+  background: var(--brand);
   color: #fff;
   margin-bottom: 34px;
-  box-shadow: var(--shadow-red);
+  box-shadow: var(--shadow-brand);
 }
 .onboard-art svg { width: 46px; height: 46px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
 /* slide 1 shows the actual logo mark, colors baked into the symbol */
-.onboard-art--logo { background: var(--gray-100); box-shadow: none; color: var(--ink); }
-.onboard-art--logo svg { width: 52px; height: 52px; stroke: none; }
+.onboard-art--logo { border-radius: 0; background: transparent; box-shadow: none; color: var(--ink); }
+.onboard-art--logo svg { width: 96px; height: 96px; stroke: none; }
 .onboard-slide h2 {
   font-family: var(--font-display);
   font-size: 2.4rem;
@@ -1194,7 +1240,7 @@ details.faq .faq-body em { font-style: normal; font-weight: 700; color: var(--in
   letter-spacing: -0.05em;
   text-transform: uppercase;
 }
-.onboard-slide h2 em { font-style: normal; color: var(--red); }
+.onboard-slide h2 em { font-style: normal; color: var(--brand-highlight); }
 .onboard-slide > p { margin-top: 16px; color: var(--text-soft); font-size: 0.98rem; max-width: 330px; font-weight: 500; line-height: 1.5; }
 
 /* friendly acceptance step on the final slide */
@@ -1229,12 +1275,12 @@ details.faq .faq-body em { font-style: normal; font-weight: 700; color: var(--in
   transition: background 0.15s, border-color 0.15s;
 }
 .onboard-accept-box svg { width: 14px; height: 14px; opacity: 0; fill: none; stroke: currentColor; stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; transition: opacity 0.15s; }
-.onboard-accept input:checked + .onboard-accept-box { background: var(--red); border-color: var(--red); }
+.onboard-accept input:checked + .onboard-accept-box { background: var(--brand); border-color: var(--brand); }
 .onboard-accept input:checked + .onboard-accept-box svg { opacity: 1; }
 .onboard-accept b { color: var(--text); font-weight: 700; }
 .onboard-legal-link {
   font: inherit;
-  color: var(--red);
+  color: var(--brand-highlight);
   font-weight: 700;
   text-decoration: underline;
   text-underline-offset: 3px;

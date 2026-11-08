@@ -1,19 +1,17 @@
 /*!
- * Offline UPI
+ * AirPing
  * Copyright (c) 2026 Aayush Gupta. All rights reserved.
  * Source-available for viewing and evaluation only. See LICENSE.
  */
 
-// Home: one big verb, two smaller ones, your people, and anything that
-// still needs your attention.
+// Home: the main payment action, compact shortcuts, and small live previews.
 
 import { store } from '../store.js';
-import { CODES, CARRIERS, isAndroid, isIOS } from '../ussd.js';
+import { isAndroid, isIOS } from '../ussd.js';
 import { formatINR } from '../upi.js';
-import { qs, esc, icon, toast, sheet, avatarHtml } from '../ui.js';
+import { qs, esc, icon, toast, sheet, avatarHtml, stampHtml, fmtTime } from '../ui.js';
 import { haptics } from '../haptics.js';
 import { openBalanceSheet } from './balance.js';
-import { openMakerSheet } from '../maker.js';
 import { installPrompt, clearInstallPrompt } from '../main.js';
 
 function runsStandalone() {
@@ -27,40 +25,77 @@ function runsStandalone() {
 export function initHome(root, { nav }) {
   function render() {
     const { settings, history } = store.get();
-    const people = store.rankedPayees().slice(0, 8);
+    const people = store.rankedPayees().slice(0, 3);
     const unconfirmed = store.latestUnconfirmed();
+    const latest = history[0];
     const canInstall = !runsStandalone(); // installing is moot once installed
 
     root.innerHTML = `
-      <div class="stack stack--loose">
+      <div class="home-dashboard">
         <button type="button" class="action-card" data-go-pay>
-          <span class="overline">Over *99# ussd</span>
+          <span class="overline">Over *99# USSD</span>
           <h2>Send money</h2>
-          <p>No data, no Wi-Fi. Just your SIM and a UPI PIN.</p>
+          <p>No data, no Wi-Fi needed.</p>
           ${icon('arrow', 'action-card-arrow')}
         </button>
 
-        <div class="duo">
-          <button type="button" class="mini-card" data-balance>
+        <div class="quick-actions" aria-label="Quick actions">
+          <button type="button" class="quick-action" data-balance>
             ${icon('rupee')}
-            <span><b>Balance</b><span class="mini-sub mono">${esc(CODES.balance.code)}</span></span>
+            <b>Balance</b>
           </button>
-          <button type="button" class="mini-card" data-go-receive>
+          <button type="button" class="quick-action quick-action--scan" data-go-scan>
+            ${icon('scan')}
+            <b>Scan</b>
+          </button>
+          <button type="button" class="quick-action" data-go-receive>
             ${icon('qr')}
-            <span><b>Receive</b><span class="mini-sub">Your UPI ID &amp; QR</span></span>
+            <b>Receive</b>
           </button>
         </div>
 
-        <button type="button" class="maker-credit" data-maker>
-          Designed &amp; built by <b>Aayush Gupta</b> ${icon('ext')}
-        </button>
+        <section class="home-section" aria-labelledby="recent-title">
+          <div class="section-head">
+            <h2 class="overline" id="recent-title">Recent payments</h2>
+            <a class="linklike" href="#/history">All history</a>
+          </div>
+          ${latest ? `
+            <div class="payment-preview">
+              <div class="payment-preview-row">
+                ${avatarHtml(latest.name || latest.vpa)}
+                <button type="button" class="payment-preview-main" data-view-history aria-label="Open recent payment history">
+                  <b>${esc(latest.name || latest.vpa)}</b>
+                  <span>${esc(fmtTime(latest.at))}${latest.note ? ` · ${esc(latest.note)}` : ''}</span>
+                </button>
+                <span class="payment-preview-side">
+                  <b>− ${esc(formatINR(latest.amount))}</b>
+                  ${stampHtml(latest.status)}
+                </span>
+              </div>
+              ${unconfirmed?.id === latest.id ? nudgeHtml(unconfirmed) : ''}
+            </div>` : `
+            <button type="button" class="payment-empty" data-go-pay>
+              <span>No payments yet</span><b>Start your first payment ${icon('arrow')}</b>
+            </button>`}
+        </section>
 
-        ${unconfirmed ? nudgeHtml(unconfirmed) : ''}
+        ${unconfirmed && unconfirmed.id !== latest?.id ? nudgeHtml(unconfirmed) : ''}
 
-        ${people.length ? `
-          <div>
+        ${!settings.setupDismissed ? `
+          <div class="banner setup-banner">
+            ${icon('sim')}
+            <div>
+              <b>First time on *99#?</b> Link this SIM to your bank once.
+              <span class="banner-actions">
+                <button type="button" class="linklike" data-go-setup>See how</button>
+                <button type="button" class="linklike" data-dismiss-setup>Done already</button>
+              </span>
+            </div>
+          </div>` : ''}
+
+        <section class="home-section people-section" aria-labelledby="people-title">
             <div class="section-head">
-              <span class="overline">People</span>
+              <h2 class="overline" id="people-title">People</h2>
               <a class="linklike" href="#/people">See all</a>
             </div>
             <div class="people-strip">
@@ -69,56 +104,38 @@ export function initHome(root, { nav }) {
                   ${avatarHtml(p.name)}
                   <span>${esc(p.name)}</span>
                 </button>`).join('')}
+              <button type="button" class="person-chip person-chip--add" data-add-person aria-label="Add a person">
+                <span class="add-person-mark">${icon('plus')}</span><span>Add</span>
+              </button>
             </div>
-          </div>` : ''}
-
-        ${!settings.setupDismissed ? `
-          <div class="banner">
-            ${icon('sim')}
-            <div>
-              <b>First time on *99#?</b> Your bank needs a one-time link to this SIM. Two minutes, once ever.
-              <span class="banner-actions">
-                <button type="button" class="linklike" data-go-setup>See how</button>
-                <button type="button" class="linklike" data-dismiss-setup style="color:var(--text-faint)">Done already</button>
-              </span>
-            </div>
-          </div>` : ''}
-
-        <p class="carrier-strip">
-          Works on ${CARRIERS.filter((c) => c.works).map((c) => `<b>${esc(c.name.split(' ')[0])}</b>`).join(' · ')}
-          &nbsp;·&nbsp; <button type="button" class="carrier-legal" data-go-legal>Legal</button>
-        </p>
+        </section>
 
         ${canInstall ? `
-          <div style="text-align:center">
+          <div class="install-row">
             <button type="button" class="install-cta" data-install-app>
-              ${icon('download')} Install the app (PWA)
+              ${icon('download')} Install AirPing (PWA)
             </button>
           </div>` : ''}
       </div>`;
 
-    qs('[data-go-pay]', root).addEventListener('click', () => {
-      haptics.tap();
-      nav.go('pay');
-    });
+    root.querySelectorAll('[data-go-pay]').forEach((button) =>
+      button.addEventListener('click', () => {
+        haptics.tap();
+        nav.go('pay');
+      }));
+    qs('[data-go-scan]', root).addEventListener('click', () => nav.go('scan'));
     qs('[data-go-receive]', root).addEventListener('click', () => nav.go('receive'));
+    qs('[data-view-history]', root)?.addEventListener('click', () => nav.go('history'));
+    qs('[data-add-person]', root).addEventListener('click', () => nav.go('people', { add: true }));
     qs('[data-balance]', root).addEventListener('click', () => {
       haptics.tap();
       openBalanceSheet();
     });
     qs('[data-go-setup]', root)?.addEventListener('click', () => nav.go('guide', { section: 'setup' }));
-    qs('[data-go-legal]', root).addEventListener('click', () => {
-      haptics.tap();
-      nav.go('guide', { section: 'legal' });
-    });
     qs('[data-dismiss-setup]', root)?.addEventListener('click', () => {
       store.patchSettings({ setupDismissed: true });
     });
     qs('[data-install-app]', root)?.addEventListener('click', onInstallTap);
-    qs('[data-maker]', root).addEventListener('click', () => {
-      haptics.tap();
-      openMakerSheet();
-    });
     root.querySelectorAll('[data-pay-vpa]').forEach((b) =>
       b.addEventListener('click', () => {
         haptics.tap();
@@ -126,8 +143,7 @@ export function initHome(root, { nav }) {
         nav.go('pay', p ? { vpa: p.vpa, name: p.name } : null);
       }));
 
-    const nudge = qs('[data-nudge]', root);
-    if (nudge) {
+    root.querySelectorAll('[data-nudge]').forEach((nudge) => {
       qs('[data-yes]', nudge).addEventListener('click', () => {
         haptics.confirm();
         store.settlePayment(nudge.dataset.nudge, 'sent');
@@ -138,7 +154,7 @@ export function initHome(root, { nav }) {
         store.settlePayment(nudge.dataset.nudge, 'failed');
         toast('Marked as failed', { icon: 'x' });
       });
-    }
+    });
   }
 
   async function onInstallTap() {
@@ -171,10 +187,9 @@ export function initHome(root, { nav }) {
   function nudgeHtml(txn) {
     return `
       <div class="card confirm-nudge" data-nudge="${esc(txn.id)}">
-        ${avatarHtml(txn.name || txn.vpa)}
-        <div class="row-main">
-          <b>Did ${esc(formatINR(txn.amount))} reach ${esc(txn.name || txn.vpa)}?</b>
-          <span class="small muted">Confirm from bank SMS</span>
+        <div class="confirm-copy">
+          <b>Did it reach ${esc(txn.name || txn.vpa)}?</b>
+          <span class="small muted">Check your bank SMS</span>
         </div>
         <div class="nudge-actions">
           <button type="button" class="nudge-btn nudge-btn--yes" data-yes aria-label="Yes, it went through">${icon('check')}</button>

@@ -1,5 +1,5 @@
 /*!
- * Offline UPI
+ * AirPing
  * Copyright (c) 2026 Aayush Gupta. All rights reserved.
  * Source-available for viewing and evaluation only. See LICENSE.
  */
@@ -54,19 +54,37 @@ function route() {
   current = next;
   currentName = name;
 
-  document.querySelectorAll('.tab').forEach((tab) => {
-    tab.classList.toggle('is-active', tab.dataset.tab === name);
+  document.querySelectorAll('[data-top-route]').forEach((link) => {
+    const active = link.dataset.topRoute === name;
+    link.classList.toggle('is-active', active);
+    if (active) link.setAttribute('aria-current', 'page');
+    else link.removeAttribute('aria-current');
   });
+  qs('#screens').scrollTop = 0;
   window.scrollTo({ top: 0 });
 }
 
+function wireTopNavigation() {
+  document.querySelectorAll('[data-top-route]').forEach((link) => {
+    link.addEventListener('click', (event) => {
+      event.preventDefault();
+      const target = link.dataset.topRoute;
+      nav.go(currentName === target ? 'home' : target);
+    });
+  });
+}
+
 // ---- theme --------------------------------------------------------------------
-// Light is the default; the topbar button flips to dark and back.
+// Dark is the dashboard default; the topbar button flips themes.
 
 export function applyTheme() {
   let { theme } = store.get().settings;
-  if (theme !== 'dark') theme = 'light'; // legacy 'auto' values land on light
+  if (theme !== 'light') theme = 'dark'; // legacy 'auto' values land on dark
   document.documentElement.dataset.theme = theme;
+  const themeColor = theme === 'light' ? '#ffffff' : '#111c30';
+  document.querySelectorAll('meta[name="theme-color"]').forEach((meta) => {
+    meta.setAttribute('content', themeColor);
+  });
   const iconUse = qs('#theme-toggle [data-theme-icon] use');
   if (iconUse) iconUse.setAttribute('href', theme === 'dark' ? '#i-sun' : '#i-moon');
 }
@@ -80,36 +98,16 @@ function wireThemeToggle() {
 }
 
 // ---- connectivity status line ----------------------------------------------------
-// While online, the line under the wordmark alternates between the tagline and
-// a link to the repo. Going offline stops the swap and pins the offline notice.
-
-const TAGLINE_MS = 3000;
-const REPO_MS = 6000;
-let subSwapTimer = null;
-
-function showRepoPlug(show) {
-  qs('.wordmark-subline').classList.toggle('show-repo', show);
-}
-
-function swapSubLine() {
-  const show = !qs('.wordmark-subline').classList.contains('show-repo');
-  showRepoPlug(show);
-  subSwapTimer = setTimeout(swapSubLine, show ? REPO_MS : TAGLINE_MS);
-}
+// Keep the status under the wordmark focused on connectivity.
 
 function updateNetStatus() {
   const sub = qs('#net-status');
-  qs('.wordmark-subline').classList.toggle('net-down', !navigator.onLine);
   if (navigator.onLine) {
     sub.textContent = 'Works without internet';
     sub.classList.remove('is-offline');
-    if (subSwapTimer === null) subSwapTimer = setTimeout(swapSubLine, TAGLINE_MS);
   } else {
     sub.textContent = 'Offline right now. All good';
     sub.classList.add('is-offline');
-    clearTimeout(subSwapTimer);
-    subSwapTimer = null;
-    showRepoPlug(false);
   }
 }
 
@@ -151,6 +149,7 @@ function boot() {
   registerScreen('receive', initReceive(qs('[data-screen="receive"]'), ctx));
   registerScreen('guide', initGuide(qs('[data-screen="guide"]'), ctx));
 
+  wireTopNavigation();
   window.addEventListener('hashchange', route);
   route();
 
